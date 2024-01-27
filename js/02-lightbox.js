@@ -14,9 +14,11 @@ import { galleryItems } from './gallery-items.js';
 // через 250 миллисекунд после открытия изображения.
 
 const gallery = document.querySelector('.gallery');
-gallery.addEventListener('click', onClickModal);
 
-const alleryItemList = galleryItems
+gallery.addEventListener('click', onClick);
+document.addEventListener('keydown', onCloseModal);
+
+const galleryItemList = galleryItems
   .map(({ preview, original, description }) => {
     return `<li class="gallery__item">
     <a class="gallery__link" href="${original}">
@@ -25,21 +27,20 @@ const alleryItemList = galleryItems
  </li>`;
   })
   .join('');
+gallery.insertAdjacentHTML('beforeend', galleryItemList);
 
-gallery.insertAdjacentHTML('beforeend', alleryItemList);
-
-
-function onClickModal(e) {
+function onClick(e) {
   e.preventDefault();
-  if (e.target.classList.contains('gallery__image')) {
-    const largeImg = e.target.dataset.source;
-  }
 }
 
-let lightbox = new SimpleLightbox('.gallery a', {
+ function onCloseModal(e) {
+  if(lightbox.isOpen && e.code === 'ESCAPE') {
+    lightbox.isOpen='false' 
+   }
+ }
+
+let lightboxModal = new SimpleLightbox('.gallery a', {
   captionPosition: 'bottom',
   captionsData: 'alt',
   captionDelay: 250,
 });
-
-
