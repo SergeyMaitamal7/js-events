@@ -25,11 +25,12 @@ function onClickModal(e) {
   e.preventDefault();
   if (e.target.classList.contains('gallery__image')) {
     const largeImg = e.target.dataset.source;
-
+    const instance = basicLightbox.create(`
+      <img src=${largeImg}>
+`);
+    instance.show();
   }
 }
-
-
 
 // Выполняй это задание в файлах 01-gallery.html и 01-gallery.js. Разбей его на несколько
 //  подзадач:
